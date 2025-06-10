@@ -4,7 +4,13 @@ import java.util.Scanner;
 
 public class Quiz {
 
-    public void startQuiz(int noOfQ, Scanner input, User user) throws IOException {
+    private final User currUser;
+
+    public Quiz(User user){
+        currUser=user;
+    }
+
+    public void startQuiz(int noOfQ, Scanner input) throws IOException {
         for(int i=0;i<noOfQ;i++){
             Questions question = new Questions();
             ArrayList<String> statement =  question.getStatement();
@@ -13,10 +19,10 @@ public class Quiz {
                 System.out.println(statement.get(j));
             }
 
-            boolean answerAccepted = false;
+            boolean answerSuccess = false;
             int answer=0;
 
-            while(!answerAccepted){
+            while(!answerSuccess){
                 System.out.print("Enter the number that corresponds to your selection: ");
 
                 try {
@@ -26,13 +32,13 @@ public class Quiz {
                 if (answer < 1 || answer > 4) {
                     System.out.println("Please enter a number within the range.");
                 } else {
-                    answerAccepted=true;
+                    answerSuccess=true;
                 }
             }
             boolean result = question.checkAnswer(answer);
             if(result){
                 System.out.println("Congratulations you entered the correct answer! \nPoints +1!");
-                user.addPoints(1);
+                currUser.addPoints(1);
             } else {
                 System.out.println("Sorry, you entered the wrong answer.");
             }

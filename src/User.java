@@ -16,7 +16,6 @@ public class User {
         householdSize = hSize;
         points = 0;
         level = 0;
-        energyHistory = new ArrayList<Energy>();
     }
 
     public void addPoints(int addedPoints){
@@ -41,5 +40,37 @@ public class User {
             }
             return previousEnergy;
         }
+    }
+
+    public boolean checkExisting(LocalDate currDate){
+        for(Energy i:energyHistory){
+            if(currDate==i.getDate()){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public void recordEnergy(LocalDate currDate, double energy){
+        energyHistory.add(new Energy(currDate, energy, this));
+    }
+
+    public void displayHistory(){
+        sortHistory();
+        for(int i=0;i<39;i++){
+            System.out.print("-");
+        }
+        System.out.print("\n");
+        for(Energy e:energyHistory){
+            System.out.printf("|%1$15tF|%2$10.1f|%3$10.1f|\n", e.getDate(), e.getEnergy(), e.getEnergySaved());
+        }
+        for(int i=0;i<39;i++){
+            System.out.print("-");
+        }
+        System.out.print("\n");
+    }
+
+    private void sortHistory(){
+        energyHistory.sort((i,j) -> j.getDate().compareTo(i.getDate()));
     }
 }

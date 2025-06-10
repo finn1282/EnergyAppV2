@@ -1,4 +1,5 @@
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.Scanner;
 
 public class Main {
@@ -9,11 +10,11 @@ public class Main {
     public static void main(String[] args) throws IOException {
         currentUser = new User("abc", "123", 3);
 
-        System.out.println(currentUser.getPoints());
+        currentUser.recordEnergy(LocalDate.parse("2025-11-05"), 20);
+        currentUser.recordEnergy(LocalDate.parse("2025-11-06"), 10);
+        currentUser.recordEnergy(LocalDate.parse("2025-11-07"), 30);
 
-        Quiz q = new Quiz();
-        q.startQuiz(2, input, currentUser);
+        currentUser.displayHistory();
 
-        System.out.println(currentUser.getPoints());
     }
 }
