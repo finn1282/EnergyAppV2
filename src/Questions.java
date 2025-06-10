@@ -37,4 +37,8 @@ public class Questions {
     public ArrayList<String> getStatement(){
         return  statement;
     }
+
+    public boolean checkAnswer(int ans){
+        return ans==ansIndex;
+    }
 }
