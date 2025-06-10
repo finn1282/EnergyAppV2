@@ -3,8 +3,8 @@ import java.util.*;
 
 public class Questions {
 
-    private ArrayList<String> statement;
-    private int ansIndex;
+    private final ArrayList<String> statement;
+    private final int ansIndex;
     private final int NO_OF_QUESTIONS = 3;
 
     public Questions() throws IOException {
@@ -17,7 +17,7 @@ public class Questions {
 
 
         for(int i=0;i<=qNo;i++){
-            line = reader.readLine();
+            line = reader.readLine().replaceAll("\"", "");
         }
 
         statement = new ArrayList<>(Arrays.asList(line.split(",")));
@@ -32,10 +32,17 @@ public class Questions {
 
         statement.add(0, question);
         statement.add(ansIndex, ans);
+
+        for(int j=1;j<statement.size();j++){
+            String temp = statement.get(j);
+            statement.remove(j);
+            temp = j+". "+temp;
+            statement.add(j, temp);
+        }
     }
 
     public ArrayList<String> getStatement(){
-        return  statement;
+        return statement;
     }
 
     public boolean checkAnswer(int ans){

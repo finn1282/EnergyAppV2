@@ -1,16 +1,19 @@
 import java.io.IOException;
+import java.util.Scanner;
 
 public class Main {
 
-    User currentUser;
+    static User currentUser;
+    static Scanner input = new Scanner(System.in);
 
     public static void main(String[] args) throws IOException {
-//        User u1 = new User();
+        currentUser = new User("abc", "123", 3);
 
-//        Quiz.startQuiz(currentUser);
-        Questions q = new Questions();
-        for(int i=0;i<5;i++){
-            System.out.println(new Questions().getStatement());
-        }
+        System.out.println(currentUser.getPoints());
+
+        Quiz q = new Quiz();
+        q.startQuiz(2, input, currentUser);
+
+        System.out.println(currentUser.getPoints());
     }
 }
