@@ -1,10 +1,11 @@
+import java.io.Serializable;
 import java.time.LocalDate;
 
-public class Energy {
+public class Energy implements Serializable {
 
     private final LocalDate date;
     private final double energy;
-    private final double energySaved;
+    private double energySaved;
 
     public Energy(LocalDate currDate, double inputEnergy, User user){
         date = currDate;

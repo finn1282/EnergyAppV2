@@ -1,14 +1,16 @@
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
-public class User {
+public class User implements Serializable {
 
+    private static final long serialVersionUID = 1L;
     private final String username;
     private final String password;
     private final int householdSize;
     private int points;
     private int level;
-    private ArrayList<Energy> energyHistory;
+    private ArrayList<Energy> energyHistory = new ArrayList<>() ;
 
     public User(String uname, String pwd, int hSize){
         username = uname;
@@ -72,5 +74,13 @@ public class User {
 
     private void sortHistory(){
         energyHistory.sort((i,j) -> j.getDate().compareTo(i.getDate()));
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public ArrayList<Energy> getEnergyHistory() {
+        return energyHistory;
     }
 }
