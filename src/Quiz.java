@@ -21,8 +21,7 @@ public class Quiz {
 
                 try {
                     answer = Integer.parseInt(input.next());
-                } catch (Exception ignored){
-                }
+                } catch (Exception ignored){}
 
                 if (answer < 1 || answer > 4) {
                     System.out.println("Please enter a number within the range.");
