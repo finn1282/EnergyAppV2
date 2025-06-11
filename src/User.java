@@ -83,4 +83,12 @@ public class User implements Serializable {
     public ArrayList<Energy> getEnergyHistory() {
         return energyHistory;
     }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public int getLevel() {
+        return level;
+    }
 }

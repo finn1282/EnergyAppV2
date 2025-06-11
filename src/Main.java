@@ -1,5 +1,4 @@
 import java.io.IOException;
-import java.time.LocalDate;
 import java.util.Scanner;
 
 public class Main {
@@ -8,17 +7,25 @@ public class Main {
     static Scanner input = new Scanner(System.in);
 
     public static void main(String[] args) throws IOException {
-//        currentUser = new User("abc", "123", 3);
-//
-//        currentUser.recordEnergy(LocalDate.parse("2025-11-05"), 20);
-//        currentUser.recordEnergy(LocalDate.parse("2025-11-06"), 10);
-//        currentUser.recordEnergy(LocalDate.parse("2025-11-07"), 30);
-//
-//        currentUser.displayHistory();
-        AllUsers users = new AllUsers();
+        //Login/signup
+        AllUsers users = new AllUsers(input);
         users.loadUsers();
         users.test();
+
+        if((currentUser = users.login())==null){
+            currentUser=users.signup();
+        }
+
+        //Main menu
+        System.out.printf("Welcome %s!\n", currentUser.getUsername());
+        System.out.printf("You have %d points \nYour level is %d", currentUser.getPoints(), currentUser.getLevel());
+        System.out.println("(1)Enter energy, (2)History, (3)Leaderboard, (4)Exit");
+
+
+        //Testing
         users.leaderboard(currentUser);
+
+        users.saveUsers();
 
     }
 }
