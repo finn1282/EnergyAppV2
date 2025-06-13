@@ -45,9 +45,13 @@ public class User implements Serializable {
     }
 
     public boolean checkExisting(LocalDate currDate){
-        for(Energy i:energyHistory){
-            if(currDate==i.getDate()){
-                return true;
+        if(energyHistory.isEmpty()){
+            return false;
+        }else {
+            for (Energy i : energyHistory) {
+                if (currDate.isEqual(i.getDate())) {
+                    return true;
+                }
             }
         }
         return false;
@@ -90,5 +94,9 @@ public class User implements Serializable {
 
     public int getLevel() {
         return level;
+    }
+
+    public int getHouseholdSize() {
+        return householdSize;
     }
 }

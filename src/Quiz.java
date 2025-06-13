@@ -5,12 +5,14 @@ import java.util.Scanner;
 public class Quiz {
 
     private final User currUser;
+    private final Scanner input;
 
-    public Quiz(User user){
+    public Quiz(User user, Scanner in){
         currUser=user;
+        input = in;
     }
 
-    public void startQuiz(int noOfQ, Scanner input) throws IOException {
+    public void startQuiz(int noOfQ) throws IOException {
         for(int i=0;i<noOfQ;i++){
             Questions question = new Questions();
             ArrayList<String> statement =  question.getStatement();

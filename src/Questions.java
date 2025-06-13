@@ -8,7 +8,7 @@ public class Questions {
     private final int NO_OF_QUESTIONS = 3;
 
     public Questions() throws IOException {
-        File questionsFile = new File("src/questions.txt");
+        File questionsFile = new File("data/questions.txt");
         FileReader fileReader = new FileReader(questionsFile);
         BufferedReader reader = new BufferedReader(fileReader);
         String line = "";

@@ -4,7 +4,7 @@ import java.util.Scanner;
 
 public class AllUsers {
 
-    private final String filename = "src/save.txt";
+    private final String filename = "data/save.txt";
     private final Scanner input;
     ArrayList<User> users = new ArrayList<>();
 
@@ -21,7 +21,7 @@ public class AllUsers {
             }
             outfile.close();
             file.close();
-            System.out.println("User has been saved.");
+            System.out.println("User data saved.");
         } catch (IOException e) {
             System.out.println("Failed to save.");
         }
@@ -45,18 +45,18 @@ public class AllUsers {
         int rank = 0;
         
         sortUsers();
-        for(int i=0;i<49;i++){
+        for(int i=0;i<27;i++){
             System.out.print("-");
         }
         System.out.print("\n");
         for(int i=1;i<users.size()+1;i++) {
             User u = users.get(i-1);
-            System.out.printf("|%1$15d|%2$15s|%3$15d|\n", i, u.getUsername(), u.getPoints());
+            System.out.printf("|%1$3d|%2$10s|%3$10d|\n", i, u.getUsername(), u.getPoints());
             if(u==user){
                 rank = i;
             }
         }
-        for(int i=0;i<49;i++){
+        for(int i=0;i<27;i++){
             System.out.print("-");
         }
         System.out.print("\n");
@@ -65,7 +65,7 @@ public class AllUsers {
     }
 
     public void sortUsers(){
-        users.sort((i,j)->i.getPoints()-j.getPoints());
+        users.sort((i,j)->j.getPoints()-i.getPoints());
     }
 
     public User login(){
@@ -112,6 +112,10 @@ public class AllUsers {
         while(!usernameAvailable) {
             System.out.print("Enter username: ");
             uname = input.next();
+            if(users.isEmpty()){
+                usernameAvailable=true;
+                continue;
+            }
             for(User user:users){
                 if(uname.equals(user.getUsername())){
                     System.out.println("Username in use!");
@@ -142,10 +146,14 @@ public class AllUsers {
         return newUser;
     }
 
-    public void test(){
+    public void test1(){
         for(User u:users){
             System.out.println(u.getUsername());
             System.out.println(u.getEnergyHistory().toString());
         }
+    }
+
+    public User test2(){
+        return users.get(0);
     }
 }

@@ -4,12 +4,14 @@ import java.util.Scanner;
 public class EnergyRecording {
 
     private final User currUser;
+    private final Scanner input;
 
-    public EnergyRecording(User user){
+    public EnergyRecording(User user, Scanner in){
         currUser=user;
+        input=in;
     }
 
-    public void recordEnergy(Scanner input){
+    public void recordEnergy(){
 
         LocalDate date = null;
         double energy = 0;
@@ -20,10 +22,9 @@ public class EnergyRecording {
             try {
                 date = LocalDate.parse(input.next());
             } catch (Exception ignored){
-                System.out.println("no");
+                System.out.println("Please enter the date in the format YYYY-MM-DD.");
                 continue;
             }
-
             if(!currUser.checkExisting(date)){
                 dateSuccess=true;
             } else {
@@ -35,7 +36,7 @@ public class EnergyRecording {
         while(!energySuccess){
             System.out.print("Enter energy used in kWh: ");
             try {
-                energy = Double.parseDouble(input.next());
+                energy = Double.parseDouble(input.next())/currUser.getHouseholdSize();
             } catch (Exception ignored){}
 
             if (energy<0) {
@@ -47,8 +48,9 @@ public class EnergyRecording {
 
         currUser.recordEnergy(date, energy);
         int points = calculatePoints(date, energy);
+        currUser.addPoints(points);
 
-        System.out.println("Energy for "+date+" successfully recorded. \nYou gained "+points+" points!");
+        System.out.println("Energy for "+date+" successfully recorded. \nYou gained "+points+" points! \n");
     }
 
     private int calculatePoints(LocalDate currDate, Double energy){
