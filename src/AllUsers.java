@@ -61,7 +61,7 @@ public class AllUsers {
         }
         System.out.print("\n");
         System.out.println("Your ranking is "+rank+" place.");
-
+        System.out.println();
     }
 
     public void sortUsers(){

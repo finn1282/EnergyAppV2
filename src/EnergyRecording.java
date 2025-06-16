@@ -36,7 +36,7 @@ public class EnergyRecording {
         while(!energySuccess){
             System.out.print("Enter energy used in kWh: ");
             try {
-                energy = Double.parseDouble(input.next())/currUser.getHouseholdSize();
+                energy = Double.parseDouble(input.next());
             } catch (Exception ignored){}
 
             if (energy<0) {
