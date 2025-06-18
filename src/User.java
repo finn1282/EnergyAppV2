@@ -7,43 +7,32 @@ public class User implements Serializable {
     private static final long serialVersionUID = 1L;
     private final String username;
     private final String password;
-    private final int householdSize;
     private int points;
-    private int level;
-    private ArrayList<Energy> energyHistory = new ArrayList<>() ;
+    private final ArrayList<Energy> energyHistory = new ArrayList<>() ;
 
-    public User(String uname, String pwd, int hSize){
+    //constructor, takes username and password to create new user, sets initial points to be 0
+    public User(String uname, String pwd){
         username = uname;
         password = pwd;
-        householdSize = hSize;
         points = 0;
-        level = 0;
     }
 
-    public void addPoints(int addedPoints){
-        points+=addedPoints;
-    }
-
-    public int getPoints(){
-        return points;
-    }
-
-    public double getPreviousEnergy(LocalDate currDate) {
-        double previousEnergy = 0;
+    //finds the previously recorded energy from the given date
+    public double getPreviousEnergy(Energy e) {
+        sortHistory();
+        //double previousEnergy = 0;
         if(energyHistory.isEmpty()){
             return 0;
         } else {
-            int compare = Integer.MAX_VALUE;
-            for(Energy i:energyHistory){
-                if(i.getDate().isBefore(currDate) && i.getDate().compareTo(currDate)<compare) {
-                    compare = i.getDate().compareTo(currDate);
-                    previousEnergy = i.getEnergy();
-                }
+            int pos = energyHistory.indexOf(e);
+            if(pos==energyHistory.size()-1){
+                return 0;
             }
-            return previousEnergy;
+            return energyHistory.get(pos+1).getEnergy();
         }
     }
 
+    //checks if energy at the given date has been recorded before
     public boolean checkExisting(LocalDate currDate){
         if(energyHistory.isEmpty()){
             return false;
@@ -57,46 +46,71 @@ public class User implements Serializable {
         return false;
     }
 
-    public void recordEnergy(LocalDate currDate, double energy){
-        energyHistory.add(new Energy(currDate, energy, this));
+    //creates a new Energy instance and saves it
+    //returns energy, but can be ignored
+    public Energy recordEnergy(LocalDate currDate, double energy){
+        Energy recordedEnergy = new Energy(currDate, energy, this);
+        energyHistory.add(recordedEnergy);
+        return recordedEnergy;
     }
 
+    //handles display of all the previously saved energy
     public void displayHistory(){
+        //sorts recorded energy
         sortHistory();
-        for(int i=0;i<39;i++){
+
+        //outputs table of previous recorded energy
+        System.out.println();
+        for(int i=0;i<80;i++){
+            System.out.print("-");
+        }
+        System.out.print("\nHistory\n\n");
+
+        for(int i=0;i<49;i++){
+            System.out.print("-");
+        }
+        System.out.printf("\n|%15s|%15s|%15s|\n", "Date", "Energy Used", "Energy Saved");
+
+        for(int i=0;i<49;i++){
             System.out.print("-");
         }
         System.out.print("\n");
-        for(Energy e:energyHistory){
-            System.out.printf("|%1$15tF|%2$10.1f|%3$10.1f|\n", e.getDate(), e.getEnergy(), e.getEnergySaved());
+
+        //have to manually loop through array or concurrent modification exception will occur
+        for(int i=0;i<energyHistory.size();i++){
+            Energy e = energyHistory.get(i);
+            System.out.printf("|%1$15tF|%2$15.1f|%3$15.1f|\n", e.getDate(), e.getEnergy(), e.getEnergySaved());
         }
-        for(int i=0;i<39;i++){
+        for(int i=0;i<49;i++){
             System.out.print("-");
         }
-        System.out.print("\n");
+        System.out.print("\n\n");
     }
 
+    //sorts recorded energy array by descending order
     private void sortHistory(){
         energyHistory.sort((i,j) -> j.getDate().compareTo(i.getDate()));
+    }
+
+    //method to add points to points variable
+    public void addPoints(int addedPoints){
+        points+=addedPoints;
     }
 
     public String getUsername() {
         return username;
     }
 
-    public ArrayList<Energy> getEnergyHistory() {
-        return energyHistory;
+    public int getPoints(){
+        return points;
     }
 
     public String getPassword() {
         return password;
     }
 
+    //returns level after calculation
     public int getLevel() {
-        return level;
-    }
-
-    public int getHouseholdSize() {
-        return householdSize;
+        return 1+(points / 100);
     }
 }

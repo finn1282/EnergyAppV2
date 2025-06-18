@@ -6,22 +6,31 @@ public class EnergyRecording {
     private final User currUser;
     private final Scanner input;
 
+    //constructor to save current user to record energy
     public EnergyRecording(User user, Scanner in){
         currUser=user;
         input=in;
     }
 
+    //creates new Energy instance and saves to current user
     public void recordEnergy(){
-
         LocalDate date = null;
         double energy = 0;
 
+        //outputs page formatting
+        System.out.println();
+        for(int i=0;i<80;i++){
+            System.out.print("-");
+        }
+        System.out.print("\nEnergy Recording\n\n");
+
+        //handles recording date and energy
         boolean dateSuccess=false;
         while (!dateSuccess){
             System.out.print("Enter date in the form YYYY-MM-DD: ");
             try {
                 date = LocalDate.parse(input.next());
-            } catch (Exception ignored){
+            } catch (Exception e){
                 System.out.println("Please enter the date in the format YYYY-MM-DD.");
                 continue;
             }
@@ -46,19 +55,27 @@ public class EnergyRecording {
             }
         }
 
-        currUser.recordEnergy(date, energy);
-        int points = calculatePoints(date, energy);
+        //records energy to current user
+        Energy recordedEnergy = currUser.recordEnergy(date, energy);
+
+        //calculates and increments points of user
+        int points = calculatePoints(energy, recordedEnergy);
         currUser.addPoints(points);
 
         System.out.println("Energy for "+date+" successfully recorded. \nYou gained "+points+" points! \n");
     }
 
-    private int calculatePoints(LocalDate currDate, Double energy){
-        double prevEnergy = currUser.getPreviousEnergy(currDate);
+    //calculates points that user should gain based on amount saved from previous records
+    private int calculatePoints(Double energy, Energy recordedEnergy){
+        //gets the previous energy saved of user
+        double prevEnergy = currUser.getPreviousEnergy(recordedEnergy);
+
         if(prevEnergy==0||prevEnergy<energy){
             return 0;
         }
-        return (int) (prevEnergy-energy)*10;
+
+        //points calculation
+        return (int) ((prevEnergy-energy)*10);
     }
 
 }

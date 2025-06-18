@@ -2,49 +2,63 @@ import java.util.ArrayList;
 import java.io.*;
 import java.util.Scanner;
 
-public class AllUsers {
+public class AllUsers implements Serializable{
 
-    private final String filename = "data/save.txt";
-    private final Scanner input;
+    private transient Scanner input;
     ArrayList<User> users = new ArrayList<>();
 
-    public AllUsers(Scanner in){
+//    public void saveUsers(){
+//        try {
+//            FileOutputStream file = new FileOutputStream(filename);
+//            ObjectOutputStream outfile = new ObjectOutputStream(file);
+//            for(User user:users) {
+//                outfile.writeObject(user);
+//            }
+//            outfile.close();
+//            file.close();
+//            System.out.println("User data saved.");
+//        } catch (IOException e) {
+//            System.out.println("Failed to save.");
+//        }
+//    }
+//
+//    public void loadUsers(){
+//        try {
+//            FileInputStream file = new FileInputStream(filename);
+//            ObjectInputStream infile = new ObjectInputStream(file);
+//            User user;
+//            while((user  = (User) infile.readObject())!=null){
+//                users.add(user);
+//            }
+//            infile.close();
+//            file.close();
+//            System.out.println("Users successfully loaded.");
+//        } catch (Exception ignored){}
+//    }
+
+    //sets the main scanner for input in the class
+    public void setInput(Scanner in){
         input=in;
     }
 
-    public void saveUsers(){
-        try {
-            FileOutputStream file = new FileOutputStream(filename);
-            ObjectOutputStream outfile = new ObjectOutputStream(file);
-            for(User user:users) {
-                outfile.writeObject(user);
-            }
-            outfile.close();
-            file.close();
-            System.out.println("User data saved.");
-        } catch (IOException e) {
-            System.out.println("Failed to save.");
-        }
-    }
-
-    public void loadUsers(){
-        try {
-            FileInputStream file = new FileInputStream(filename);
-            ObjectInputStream infile = new ObjectInputStream(file);
-            User user;
-            while((user  = (User) infile.readObject())!=null){
-                users.add(user);
-            }
-            infile.close();
-            file.close();
-            System.out.println("Users successfully loaded.");
-        } catch (Exception ignored){}
-    }
-
+    //outputs the leaderboard and current ranking of the user
     public void leaderboard(User user){
+        //variable to find rank of user
         int rank = 0;
-        
+
+        //sorts users
         sortUsers();
+
+        //output formatting
+        System.out.println();
+        for(int i=0;i<80;i++){
+            System.out.print("-");
+        }
+        System.out.print("\nLeaderboard\n\n");
+        for(int i=0;i<27;i++){
+            System.out.print("-");
+        }
+        System.out.printf("\n|%3s|%10s|%10s|\n", "", "User", "Points");
         for(int i=0;i<27;i++){
             System.out.print("-");
         }
@@ -52,6 +66,7 @@ public class AllUsers {
         for(int i=1;i<users.size()+1;i++) {
             User u = users.get(i-1);
             System.out.printf("|%1$3d|%2$10s|%3$10d|\n", i, u.getUsername(), u.getPoints());
+            //finds the ranking of the current user
             if(u==user){
                 rank = i;
             }
@@ -64,21 +79,25 @@ public class AllUsers {
         System.out.println();
     }
 
+    //sorts user by descending points
     public void sortUsers(){
         users.sort((i,j)->j.getPoints()-i.getPoints());
     }
 
+    //handles user login
     public User login(){
-
         User currentUser = null;
 
+        //checks if user is existing
         boolean accountExists = false;
         while (!accountExists){
             System.out.print("Enter your username to sign in, or enter 0 to sign up: ");
             String username = input.next();
+            //option if user wants to create account
             if (username.equals("0")) {
                 return null;
             }
+            //finds the user object that user is trying to login to
             for (User user : users) {
                 if (user.getUsername().equals(username)) {
                     accountExists = true;
@@ -90,6 +109,7 @@ public class AllUsers {
             }
         }
 
+        //input and checking of user password
         boolean passwordCorrect = false;
         while (!passwordCorrect){
             System.out.print("Enter your password: ");
@@ -99,16 +119,20 @@ public class AllUsers {
             } else {
                 passwordCorrect=true;
                 System.out.println("Successfully logged in");
+                System.out.println();
             }
         }
 
         return currentUser;
     }
 
+    //handles creating new user
     public User signup() {
 
         boolean usernameAvailable = false;
         String uname=null;
+
+        //takes username input to create new user
         while(!usernameAvailable) {
             System.out.print("Enter username: ");
             uname = input.next();
@@ -116,6 +140,7 @@ public class AllUsers {
                 usernameAvailable=true;
                 continue;
             }
+            //checks if username in use
             for(User user:users){
                 if(uname.equals(user.getUsername())){
                     System.out.println("Username in use!");
@@ -127,33 +152,15 @@ public class AllUsers {
             }
         }
 
+        //takes user password
         System.out.print("Enter password: ");
         String pwd = input.next();
-        int size=0;
-        while (true) {
-            System.out.print("Enter number of people in your household: ");
-            try {
-                size = Integer.parseInt(input.next());
-            } catch (Exception e) {
-                System.out.println("Please enter an integer value.");
-            }
-            if(size>0){
-                break;
-            }
-        }
-        User newUser = new User(uname,pwd,size);
+
+        //creating new user instance
+        User newUser = new User(uname,pwd);
+
+        //adds user to list of existing users
         users.add(newUser);
         return newUser;
-    }
-
-    public void test1(){
-        for(User u:users){
-            System.out.println(u.getUsername());
-            System.out.println(u.getEnergyHistory().toString());
-        }
-    }
-
-    public User test2(){
-        return users.get(0);
     }
 }

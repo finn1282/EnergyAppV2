@@ -16,6 +16,6 @@
 "What is conservation?","Using resources wisely","Using natural and human resources however you want","Watching television throughout the day","Leaving the watering running"
 "What kind of charger should we use to save energy?","Solar-powered chargers","Gas-powered chargers","Electric chargers","Wireless charger"
 "What does an 'Energy Star' label mean?","It's good at using less energy","It's more fun to use","It uses as much energy as possible","It works only at night"
-"What is the mail goal of saving energy at home?","To protect the environment and reduce electricity costs","To increase electricity bills","To make the house hotter","To use more fossil fuels"
+"What is the main goal of saving energy at home?","To protect the environment and reduce electricity costs","To increase electricity bills","To make the house hotter","To use more fossil fuels"
 "What makes LED bulbs a better choice?","They last longer and use less electricity","They cost more","They use more energy to shine brighter","They are bigger than other bulbs"
 
