@@ -10,9 +10,8 @@ public class Questions {
 
     public Questions() throws IOException {
         //loading questions file
-        File questionsFile = new File("data/questions.txt");
-        FileReader fileReader = new FileReader(questionsFile);
-        BufferedReader reader = new BufferedReader(fileReader);
+        InputStream questionsFile = getClass().getClassLoader().getResourceAsStream("questions.txt");
+        BufferedReader reader = new BufferedReader(new InputStreamReader(questionsFile));
         String line = "";
 
         //chooses a random question to ask

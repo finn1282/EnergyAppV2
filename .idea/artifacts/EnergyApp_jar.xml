@@ -1,0 +1,10 @@
+<component name="ArtifactManager">
+  <artifact type="jar" build-on-make="true" name="EnergyApp:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/EnergyApp_jar</output-path>
+    <root id="archive" name="EnergyApp.jar">
+      <element id="file-copy" path="$PROJECT_DIR$/data/questions.txt" />
+      <element id="file-copy" path="$PROJECT_DIR$/data/tips.txt" />
+      <element id="dir-copy" path="$PROJECT_DIR$/data" />
+    </root>
+  </artifact>
+</component>

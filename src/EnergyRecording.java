@@ -65,6 +65,15 @@ public class EnergyRecording {
         System.out.println("Energy for "+date+" successfully recorded. \nYou gained "+points+" points! \n");
     }
 
+    public void recordEnergy(LocalDate date, double energy){
+        //records energy to current user
+        Energy recordedEnergy = currUser.recordEnergy(date, energy);
+
+        //calculates and increments points of user
+        int points = calculatePoints(energy, recordedEnergy);
+        currUser.addPoints(points);
+    }
+
     //calculates points that user should gain based on amount saved from previous records
     private int calculatePoints(Double energy, Energy recordedEnergy){
         //gets the previous energy saved of user

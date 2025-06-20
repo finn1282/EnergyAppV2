@@ -8,9 +8,8 @@ public class Tips {
     //constructor, loads tips from file
     public Tips() throws IOException {
         //loading quiz file
-        File questionsFile = new File("data/tips.txt");
-        FileReader fileReader = new FileReader(questionsFile);
-        BufferedReader reader = new BufferedReader(fileReader);
+        InputStream tipsFile = getClass().getClassLoader().getResourceAsStream("tips.txt");
+        BufferedReader reader = new BufferedReader(new InputStreamReader(tipsFile));
 
         String line;
 

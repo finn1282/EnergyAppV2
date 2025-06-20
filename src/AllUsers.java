@@ -7,35 +7,6 @@ public class AllUsers implements Serializable{
     private transient Scanner input;
     ArrayList<User> users = new ArrayList<>();
 
-//    public void saveUsers(){
-//        try {
-//            FileOutputStream file = new FileOutputStream(filename);
-//            ObjectOutputStream outfile = new ObjectOutputStream(file);
-//            for(User user:users) {
-//                outfile.writeObject(user);
-//            }
-//            outfile.close();
-//            file.close();
-//            System.out.println("User data saved.");
-//        } catch (IOException e) {
-//            System.out.println("Failed to save.");
-//        }
-//    }
-//
-//    public void loadUsers(){
-//        try {
-//            FileInputStream file = new FileInputStream(filename);
-//            ObjectInputStream infile = new ObjectInputStream(file);
-//            User user;
-//            while((user  = (User) infile.readObject())!=null){
-//                users.add(user);
-//            }
-//            infile.close();
-//            file.close();
-//            System.out.println("Users successfully loaded.");
-//        } catch (Exception ignored){}
-//    }
-
     //sets the main scanner for input in the class
     public void setInput(Scanner in){
         input=in;
@@ -162,5 +133,15 @@ public class AllUsers implements Serializable{
         //adds user to list of existing users
         users.add(newUser);
         return newUser;
+    }
+
+    //used for importing users from dataset
+    public void addUser(User user){
+        users.add(user);
+    }
+
+    //used for accessing users while importing dataset
+    public ArrayList<User> getUsers(){
+        return users;
     }
 }

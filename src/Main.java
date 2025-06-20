@@ -89,16 +89,15 @@ public class Main {
 
     public static void loadUsers(){
         try {
-            FileInputStream file = new FileInputStream(save);
-            ObjectInputStream infile = new ObjectInputStream(file);
+            InputStream saveFile = Main.class.getClassLoader().getResourceAsStream("save.ser");
+            ObjectInputStream infile = new ObjectInputStream(saveFile);
             users = (AllUsers) infile.readObject();
-            infile.close();
-            file.close();
             //System.out.println("Users successfully loaded.");
 
         //ignored because EOFExcpetion means file is empty, no previous save data
         } catch (EOFException ignored){
         } catch (Exception e){
+            e.printStackTrace();
             System.out.println("Users failed to load, please restart program.");
         }
     }
