@@ -3,7 +3,7 @@ import java.util.Scanner;
 
 public class Main {
 
-    static final String save = "data/save.ser";
+    static final String save = "save.ser";
     static User currentUser;
     static Scanner input = new Scanner(System.in);
     static AllUsers users = new AllUsers();
@@ -76,11 +76,8 @@ public class Main {
 
     public static void saveUsers(){
         try {
-            FileOutputStream file = new FileOutputStream(save);
-            ObjectOutputStream outfile = new ObjectOutputStream(file);
-            outfile.writeObject(users);
-            outfile.close();
-            file.close();
+            ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(save));
+            out.writeObject(users);
             System.out.println("User data saved.");
         } catch (IOException e) {
             System.out.println("Failed to save.");
@@ -89,15 +86,12 @@ public class Main {
 
     public static void loadUsers(){
         try {
-            InputStream saveFile = Main.class.getClassLoader().getResourceAsStream("save.ser");
-            ObjectInputStream infile = new ObjectInputStream(saveFile);
-            users = (AllUsers) infile.readObject();
+            ObjectInputStream in = new ObjectInputStream(new FileInputStream(save));
+            users = (AllUsers) in.readObject();
             //System.out.println("Users successfully loaded.");
-
-        //ignored because EOFExcpetion means file is empty, no previous save data
         } catch (EOFException ignored){
+            //ignored because EOFException means file is empty, no previous save data
         } catch (Exception e){
-            e.printStackTrace();
             System.out.println("Users failed to load, please restart program.");
         }
     }

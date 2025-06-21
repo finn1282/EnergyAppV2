@@ -7,14 +7,14 @@ public class Tips {
 
     //constructor, loads tips from file
     public Tips() throws IOException {
-        //loading quiz file
-        InputStream tipsFile = getClass().getClassLoader().getResourceAsStream("tips.txt");
-        BufferedReader reader = new BufferedReader(new InputStreamReader(tipsFile));
+        //loading tips file
+        InputStream tipsFile = getClass().getResourceAsStream("tips.txt");
+        BufferedReader tipsReader = new BufferedReader(new InputStreamReader(tipsFile));
 
         String line;
 
         //reading tips from file
-        while ((line = reader.readLine()) != null){
+        while ((line = tipsReader.readLine()) != null){
             tips.add(line);
         }
     }

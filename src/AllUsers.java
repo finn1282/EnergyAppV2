@@ -4,6 +4,7 @@ import java.util.Scanner;
 
 public class AllUsers implements Serializable{
 
+    private static final long serialVersionUID = 1L;
     private transient Scanner input;
     ArrayList<User> users = new ArrayList<>();
 
@@ -133,15 +134,5 @@ public class AllUsers implements Serializable{
         //adds user to list of existing users
         users.add(newUser);
         return newUser;
-    }
-
-    //used for importing users from dataset
-    public void addUser(User user){
-        users.add(user);
-    }
-
-    //used for accessing users while importing dataset
-    public ArrayList<User> getUsers(){
-        return users;
     }
 }

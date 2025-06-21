@@ -4,7 +4,6 @@ import java.util.ArrayList;
 
 public class User implements Serializable {
 
-    private static final long serialVersionUID = 1L;
     private final String username;
     private final String password;
     private int points;
