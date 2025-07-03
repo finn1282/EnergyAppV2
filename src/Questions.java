@@ -3,46 +3,52 @@ import java.util.*;
 
 public class Questions {
 
-    //question statement saved as ArrayList to be able to call shuffle method
+    //Question statement saved as ArrayList to be able to call shuffle method
     private final ArrayList<String> statement;
+    //Position of correct answer saved
     private final int ansIndex;
+    //Specifies total number of questions in questions.txt file
     private final int NO_OF_QUESTIONS = 20;
 
+    /**
+     * Constructor that generates question statement and shuffles options
+     */
     public Questions() throws IOException {
-        //loading questions file
+        //Loading questions file
         InputStream questionsFile = getClass().getResourceAsStream("questions.txt");
         BufferedReader questionsReader = new BufferedReader(new InputStreamReader(questionsFile));
 
         String line = "";
 
-        //chooses a random question to ask
+        //Choosing a random question to ask
         int qNo = (int) (Math.random() * NO_OF_QUESTIONS);
 
-        //reading questions from file based on random question number generated
+        //Reading questions from file upto line based on random question number generated
         for(int i=0;i<=qNo;i++){
+            //Removes quotations from question statement
             line = questionsReader.readLine().replaceAll("\"", "");
         }
 
-        //turning question statement into array of question and answers
+        //Turning question statement into array of question and answers
         statement = new ArrayList<>(Arrays.asList(line.split(",")));
         String question = statement.get(0);
 
-        //generating position to place answer when options shuffled
+        //Generating position to place answer when options shuffled
         ansIndex = (int) ((Math.random() * 4)+1);
         String ans = statement.get(1);
 
-        //taking answer and question out of statement array to shuffle options
+        //Taking answer and question out of statement array to shuffle options
         statement.remove(0);
         statement.remove(0);
 
-        //shuffling options
+        //Shuffling options
         Collections.shuffle(statement);
 
-        //placing question and answer back into statement array
+        //Placing question and answer back into statement array
         statement.add(0, question);
         statement.add(ansIndex, ans);
 
-        //adding numbering to options
+        //Adding numbering to options
         for(int j=1;j<statement.size();j++){
             String temp = statement.get(j);
             statement.remove(j);
@@ -51,7 +57,7 @@ public class Questions {
         }
     }
 
-    //checks if user input is equal to answer
+    //Checks if user input is equal to answer
     public boolean checkAnswer(int ans){
         return ans==ansIndex;
     }
